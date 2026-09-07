@@ -14,8 +14,23 @@ Do not wait for him to ask.
 - **Code: BUILD COMPLETE** — all 5 phases implemented, each QC-approved by `qc-reviewer`
 - **Tests: 236/236 passing**, exit 0
 - **App:** confirmed to launch (`http://localhost:8501`, HTTP 200)
-- **Git:** ⚠️ **NOTHING COMMITTED.** `code/` is entirely untracked. No `.gitignore` exists yet.
+- **Git:** committed and pushed — `master` = `origin/master` at
+  `https://github.com/MarcosCircana/new_meta_lift_analysis_ravi` (private).
+  `.gitignore` blocks all client data; no data file has ever been committed.
+  One unstaged item: `Meta Analysis_NewV1.docx` shows as modified — that change predates
+  the build and was deliberately left alone.
 - **Next step:** interactive verification of `app.py` by a human (see checklist below)
+
+### Documents
+
+| File | Role |
+|------|------|
+| `CLAUDE.md` | This file — live status, rules, what's outstanding |
+| `META_BRIEF.md` | Authority on **what** was agreed: 19 locked decisions, 4 deviations |
+| `ARCHITECTURE.md` | Authority on **how**: module map, contracts, 17 edge cases, precision contract |
+| `QUESTIONS_FOR_RAVI.md` | 19 questions for the requester, annotated against the build — **3 are still open and affect existing code** |
+| `HANDOFF.md` | Inherited lessons from the predecessor project |
+| `Meta Analysis_NewV1.docx` | The original source requirement |
 
 ---
 
@@ -107,19 +122,31 @@ traced against the spec but **never executed**. A human must confirm:
 - [ ] **A real `.xlsx` upload.** All samples are CSV; Excel sheet-1 reading has never been
       exercised through the UI.
 
-### 2. Requester sign-off on four deviations from the doc
+### 2. Three questions for Ravi that affect code ALREADY BUILT
 
-See `META_BRIEF.md` section 7. All four follow from the hosted-web-app decision:
-no output folder, no true folder picker, `MODEL_DESC` standardization stays manual, schema
-read at runtime rather than stored.
+Full detail in `QUESTIONS_FOR_RAVI.md` (annotated). These are not future-phase questions —
+each one changes existing behaviour:
 
-### 3. Git — nothing is committed
+- **Q5 — is an alias map needed?** Built with strict column-name matching, tolerant of case
+  and whitespace only. **No alias map.** That was right on the evidence: all 10 samples have
+  byte-identical 31-column headers. But they are one client and one scoring engine, and the
+  question itself notes the Antara tool needed aliases *because real naming differences
+  appeared*. **If naming varies across clients, every file from a differing client rejects
+  and the tool looks broken.** Highest-risk open item on the project.
+- **Q15 — is the schema locked for a project's life?** As built, effectively yes: the master
+  defines the columns and any extra column rejects. A legitimately new column mid-study fails
+  every subsequent file. Nobody chose this — it fell out of decisions 7 and 10.
+- **Q16 — what happens after a file fails?** As built: fix the source and re-run (safe and
+  cheap, since duplicates skip). There is no in-tool remap. A defensible v1 choice, but a
+  choice. Overlaps Q5 — answering Q5 "yes, aliases" removes much of the need.
 
-`code/`, `META_BRIEF.md`, `ARCHITECTURE.md`, `test_fixtures/` and `Samples/` are all untracked.
+### 3. Requester sign-off on four deviations from the doc
 
-⚠️ **Write `.gitignore` BEFORE staging anything.** `Samples/` contains real client read
-results (Instacart, L'Oréal, Bounty, Stella Artois). Antara had to retroactively strip client
-`.xlsx`/`.csv` files out of git history — do not repeat that.
+See `META_BRIEF.md` section 7, also summarised at the end of `QUESTIONS_FOR_RAVI.md`. All four
+follow from the hosted-web-app decision: no output folder, no true folder picker,
+`MODEL_DESC` standardization stays manual, schema read at runtime rather than stored.
+
+Same conversation as item 2 — send them together.
 
 ### 4. Open design defaults
 
