@@ -1,0 +1,48 @@
+# ---------------------------------------------------------------------------
+# CLIENT DATA — NEVER COMMIT
+#
+# Samples/ and test_fixtures/ hold real Circana client read results (Instacart,
+# L'Oreal, Bounty, Stella Artois, Planters and others). The test fixtures are
+# derived from those files and carry real data rows too.
+#
+# The predecessor project (new_pg_antara_6_24) had to retroactively strip client
+# .xlsx/.csv files out of git history. This blocklist exists so that does not
+# happen again. Do not add exceptions for individual data files.
+# ---------------------------------------------------------------------------
+*.csv
+*.xlsx
+*.xls
+Samples/
+test_fixtures/
+
+# Outlook message exports (may contain client correspondence)
+*.msg
+
+# ---------------------------------------------------------------------------
+# Python
+# ---------------------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+venv/
+.venv/
+env/
+.pytest_cache/
+.mypy_cache/
+*.egg-info/
+
+# ---------------------------------------------------------------------------
+# Streamlit
+# ---------------------------------------------------------------------------
+.streamlit/secrets.toml
+
+# ---------------------------------------------------------------------------
+# Editors / OS
+# ---------------------------------------------------------------------------
+.vscode/
+.idea/
+Thumbs.db
+Desktop.ini
+~$*
+*.tmp
