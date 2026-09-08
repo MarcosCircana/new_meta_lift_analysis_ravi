@@ -81,6 +81,10 @@ from study_processor import process_batch
 st.set_page_config(page_title="Meta Analysis Consolidation", layout="wide")
 st.title("Meta Analysis Consolidation")
 st.caption("Drop your batch of study files plus the master (or the first file to become one).")
+st.caption(
+    "If you already have a master file, please make sure its filename starts with "
+    "\"Master_\" — including the underscore — otherwise it will not be recognised."
+)
 
 # ---------------------------------------------------------------------------
 # STEP 1 — input section

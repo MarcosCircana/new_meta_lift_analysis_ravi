@@ -568,6 +568,12 @@ check(
     parse_master_base_name("Master_Instacart_2026-09-07_1430.csv"),
 )
 check(
+    "parse_master_base_name: 'Master_File_Instacart_2026-09-07_1430.csv' -> 'Instacart' "
+    "(output prefix stripped whole, so 'File_' cannot accumulate on re-upload)",
+    parse_master_base_name("Master_File_Instacart_2026-09-07_1430.csv") == "Instacart",
+    parse_master_base_name("Master_File_Instacart_2026-09-07_1430.csv"),
+)
+check(
     "parse_master_base_name: 'Master_Instacart.csv' -> 'Instacart' (no timestamp suffix)",
     parse_master_base_name("Master_Instacart.csv") == "Instacart",
     parse_master_base_name("Master_Instacart.csv"),
@@ -687,8 +693,8 @@ for _blocked_name in ("...", "   ...   "):
     _unguarded_filename = build_master_filename(sanitize_base_name(_blocked_name), _fixed_now)
     check(
         f"unguarded build_master_filename({_blocked_name!r}) would yield the "
-        "unlabeled 'Master__...' artifact the gate exists to prevent",
-        _unguarded_filename == "Master__2026-09-07_1430.csv",
+        "unlabeled 'Master_File__...' artifact the gate exists to prevent",
+        _unguarded_filename == "Master_File__2026-09-07_1430.csv",
         _unguarded_filename,
     )
     check(
@@ -1697,7 +1703,7 @@ _FIXED_NOW = _datetime(2026, 9, 7, 14, 30)
 
 check(
     "build_master_filename: exact pattern with an injected fixed 'now'",
-    build_master_filename("Instacart", _FIXED_NOW) == "Master_Instacart_2026-09-07_1430.csv",
+    build_master_filename("Instacart", _FIXED_NOW) == "Master_File_Instacart_2026-09-07_1430.csv",
     build_master_filename("Instacart", _FIXED_NOW),
 )
 check(

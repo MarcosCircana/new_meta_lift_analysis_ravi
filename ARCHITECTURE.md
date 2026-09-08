@@ -68,7 +68,7 @@ STUDY_NAME_COL: str = "Study_Name"            # the only literal column name in 
 
 OUTPUT_ENCODING: str = "utf-8-sig"
 TIMESTAMP_FORMAT: str = "%Y-%m-%d_%H%M"       # brief decision 15
-MASTER_FILENAME_PATTERN: str = "Master_{name}_{timestamp}.csv"
+MASTER_FILENAME_PATTERN: str = "Master_File_{name}_{timestamp}.csv"
 EXCEPTION_FILENAME_PATTERN: str = "Exceptions_{name}_{timestamp}.csv"
 MASTER_TIMESTAMP_SUFFIX_RE: str = r"^(?P<name>.+)_\d{4}-\d{2}-\d{2}_\d{4}$"
 ILLEGAL_FILENAME_CHARS: str = '<>:"/\\|?*'

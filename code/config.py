@@ -12,11 +12,16 @@ ACCEPTED_EXTENSIONS: tuple[str, ...] = (".csv", ".xlsx")
 EXCEL_SHEET_INDEX: int = 0                    # brief decision 6: "Excel reads sheet 1"
 
 MASTER_FILENAME_PREFIX: str = "master_"       # compared against stem.lower()
+# Output masters are written with the longer literal prefix below. Detection still
+# uses MASTER_FILENAME_PREFIX, so both "Master_X" and "Master_File_X" are found;
+# this constant exists so parse_master_base_name can strip the longer form first
+# and the name does not grow ("Master_File_File_X") on each round trip.
+MASTER_OUTPUT_FILENAME_PREFIX: str = "master_file_"   # compared against stem.lower()
 STUDY_NAME_COL: str = "Study_Name"            # the only literal column name in the app
 
 OUTPUT_ENCODING: str = "utf-8-sig"
 TIMESTAMP_FORMAT: str = "%Y-%m-%d_%H%M"       # brief decision 15
-MASTER_FILENAME_PATTERN: str = "Master_{name}_{timestamp}.csv"
+MASTER_FILENAME_PATTERN: str = "Master_File_{name}_{timestamp}.csv"
 EXCEPTION_FILENAME_PATTERN: str = "Exceptions_{name}_{timestamp}.csv"  # DESIGN DEFAULT — pending confirmation, see spec section 8, item 8
 MASTER_TIMESTAMP_SUFFIX_RE: str = r"^(?P<name>.+)_\d{4}-\d{2}-\d{2}_\d{4}$"
 ILLEGAL_FILENAME_CHARS: str = '<>:"/\\|?*'

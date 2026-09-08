@@ -63,7 +63,8 @@ def find_master_candidates(items: Sequence[UploadedItem]) -> list[MasterCandidat
 
 
 def parse_master_base_name(filename: str) -> str:
-    """'Master_Instacart_2026-09-07_1430.csv' -> 'Instacart'
+    """'Master_File_Instacart_2026-09-07_1430.csv' -> 'Instacart'
+       'Master_Instacart_2026-09-07_1430.csv'      -> 'Instacart'
        'Master_Instacart.csv'                 -> 'Instacart'
        'master_A_B_2026-09-07_1430.csv'       -> 'A_B'
 
@@ -72,7 +73,12 @@ def parse_master_base_name(filename: str) -> str:
     else keep the whole remainder.
     """
     stem = Path(filename).stem
-    if stem.lower().startswith(config.MASTER_FILENAME_PREFIX):
+    # Longest prefix first: an output master is named "Master_File_<name>_<ts>",
+    # so stripping only "Master_" would leave "File_<name>" and the literal
+    # "File_" would accumulate on every re-upload.
+    if stem.lower().startswith(config.MASTER_OUTPUT_FILENAME_PREFIX):
+        remainder = stem[len(config.MASTER_OUTPUT_FILENAME_PREFIX):]
+    elif stem.lower().startswith(config.MASTER_FILENAME_PREFIX):
         remainder = stem[len(config.MASTER_FILENAME_PREFIX):]
     else:
         remainder = stem
